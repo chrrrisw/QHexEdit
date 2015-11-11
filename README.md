@@ -9,6 +9,7 @@ Features
 - Unlimited Undo/Redo.
 - Fully Customizable.
 - Easy to Use.
+- Python3 bindings
 
 Usage
 -----
@@ -42,7 +43,7 @@ Create a new `QHexEdit` object and associate it with the `QHexEditData` object.
 
 ```
 QHexEdit* hexedit = new QHexEdit();
-hexedit->setData(hexeditdata); 
+hexedit->setData(hexeditdata);
 ```
 
 ### Style
@@ -104,3 +105,16 @@ writer.insert(4, QString("Hello QHexEdit").toUTF8()); /* Insert an UTF-8 string 
 writer.remove(6, 10);/* Delete bytes from offset 6 to offset 10 */
 writer.replace(30, 12, QString("New Data").toUTF8()); /* Replace 12 bytes from offset 30 with the UTF-8 string "New Data" */
 ```
+
+Python3 Bindings
+----------------
+
+To build the python bindings (on Linux):
+
+```bash
+cd python
+python3 setup.py build
+sudo python3 setup.py install
+```
+
+There's a test.py program in the same directory that should show itself in the QHexEdit widget.
