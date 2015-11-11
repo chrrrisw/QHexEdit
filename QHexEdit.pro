@@ -6,8 +6,10 @@ TEMPLATE = lib
 TARGET = QHexEdit
 INCLUDEPATH += .
 
-QT += gui widgets
+QT += gui widgets designer
+
 CONFIG -= debug_and_release
+CONFIG += shared_and_static build_all
 
 HEADERS += qhexedit.h \
            qhexeditcomments.h \
@@ -28,5 +30,7 @@ SOURCES += qhexedit.cpp \
            qhexeditprivate.cpp \
            sparserangemap.cpp
 
-target.path = /usr/local/lib
-INSTALLS += target
+unix {
+  target.path = /usr/local/lib
+  INSTALLS += target
+}
