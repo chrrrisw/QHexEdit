@@ -9,7 +9,19 @@ INCLUDEPATH += .
 QT += gui widgets designer
 
 CONFIG -= debug_and_release
-CONFIG += shared_and_static build_all
+
+unix {
+
+  CONFIG += shared_and_static build_all
+
+  target.path = /usr/local/lib
+  INSTALLS += target
+
+} else {
+
+  CONFIG += staticlib
+
+}
 
 HEADERS += qhexedit.h \
            qhexeditcomments.h \
@@ -29,8 +41,3 @@ SOURCES += qhexedit.cpp \
            qhexedithighlighter.cpp \
            qhexeditprivate.cpp \
            sparserangemap.cpp
-
-unix {
-  target.path = /usr/local/lib
-  INSTALLS += target
-}
