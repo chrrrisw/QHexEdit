@@ -11,13 +11,6 @@ import sipconfig
 cfg = sipconfig.Configuration()
 pyqt_sip_dir = cfg.default_sip_dir
 
-try:
-    import PyQt5
-    PyQt_Version = 'PyQt5'
-except:
-    PyQt_Version = 'PyQt4'
-
-
 include_dirs = ['..']
 
 
@@ -37,13 +30,10 @@ class build_pyqt_ext(sipdistutils.build_ext):
         self.required = False
 
     def finalize_options(self):
-        if PyQt_Version == 'PyQt5':
-            from PyQt5.QtCore import PYQT_CONFIGURATION
-        else:
-            from PyQt4.QtCore import PYQT_CONFIGURATION
+        from PyQt5.QtCore import PYQT_CONFIGURATION
         sipdistutils.build_ext.finalize_options(self)
         self.sip_opts = self.sip_opts + PYQT_CONFIGURATION['sip_flags'].split()
-        self.sip_opts.append('-I%s/%s' % (pyqt_sip_dir, PyQt_Version))
+        self.sip_opts.append('-I%s/%s' % (pyqt_sip_dir, 'PyQt5'))
         if self.required is not None:
             self.required = True
 
@@ -86,10 +76,7 @@ class build_pyqt_ext(sipdistutils.build_ext):
 
 
 # Used Qt libs
-if PyQt_Version == 'PyQt5':
-    qt_libs = ["QtCore", "QtGui", "QtWidgets"]
-else:
-    qt_libs = ["QtCore", "QtGui"]
+qt_libs = ["QtCore", "QtGui", "QtWidgets"]
 
 
 if cfg.qt_framework:
@@ -97,16 +84,10 @@ if cfg.qt_framework:
         include_dirs += [os.path.join(cfg.qt_lib_dir,
                                       lib + ".framework", "Headers")]
 else:
-    if PyQt_Version == 'PyQt5':
-        for qt_inc_dir in ('/usr/include/qt', '/usr/include/qt5'):
-            include_dirs.append(qt_inc_dir)
-            include_dirs += [os.path.join(qt_inc_dir, lib) for lib in qt_libs]
-        libraries = ["Qt5" + lib[2:] for lib in qt_libs]
-    else:
-        for qt_inc_dir in ('/usr/include/qt', '/usr/include/qt4'):
-            include_dirs.append(qt_inc_dir)
-            include_dirs += [os.path.join(qt_inc_dir, lib) for lib in qt_libs]
-        libraries = ["Qt" + lib[2:] for lib in qt_libs]
+    for qt_inc_dir in ('/usr/include/qt', '/usr/include/qt5'):
+        include_dirs.append(qt_inc_dir)
+        include_dirs += [os.path.join(qt_inc_dir, lib) for lib in qt_libs]
+    libraries = ["Qt5" + lib[2:] for lib in qt_libs]
 
 libraries.append("QHexEdit")
 
@@ -117,7 +98,7 @@ setup(
     version='0.1',
     ext_modules=[
         Extension(
-            "QHexEdit",
+            name="QHexEdit",
             sources=[
                 os.path.join(dirname, "qhexedit.sip"),
             ],
