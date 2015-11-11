@@ -109,7 +109,15 @@ writer.replace(30, 12, QString("New Data").toUTF8()); /* Replace 12 bytes from o
 Python3 Bindings
 ----------------
 
-To build the python bindings (on Linux):
+To build the python bindings (on Linux), first build and install the shared library:
+
+```bash
+qmake QHexEdit.pro
+make
+sudo make install
+```
+
+then build the python bindings:
 
 ```bash
 cd python
