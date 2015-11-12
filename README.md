@@ -112,7 +112,7 @@ Python3 Bindings
 To build the python bindings (on Linux), first build and install the shared library:
 
 ```bash
-qmake QHexEdit.pro
+qmake QHexEditLinuxPython.pro
 make
 sudo make install
 ```
