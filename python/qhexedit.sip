@@ -22,7 +22,7 @@ class QHexEditData : QObject
         bool isReadOnly() const;
 
     private:
-        explicit QHexEditData(QIODevice* iodevice, QObject *parent = 0);
+        explicit QHexEditData(QIODevice* iodevice, QObject * /TransferThis/ = 0);
         ~QHexEditData();
 
     public slots:
@@ -38,6 +38,37 @@ class QHexEditData : QObject
         void dataChanged(qint64 offset, qint64 size, QHexEditData::ActionType reason);
 
 };
+
+
+class QHexEditDataReader : QObject
+{
+%TypeHeaderCode
+#include <qhexeditdatareader.h>
+%End
+    public:
+        explicit QHexEditDataReader(QHexEditData* hexeditdata, QObject* /TransferThis/ = 0);
+        const QHexEditData* hexEditData() const;
+        uchar at(qint64 pos);
+        qint64 indexOf(const QByteArray& ba, qint64 start);
+        QByteArray read(qint64 pos, qint64 len);
+        QString readString(qint64 pos, qint64 maxlen = -1);
+        quint16 readUInt16(qint64 pos, QSysInfo::Endian endian = QSysInfo::ByteOrder);
+        quint32 readUInt32(qint64 pos, QSysInfo::Endian endian = QSysInfo::ByteOrder);
+        quint64 readUInt64(qint64 pos, QSysInfo::Endian endian = QSysInfo::ByteOrder);
+        qint16 readInt16(qint64 pos, QSysInfo::Endian endian = QSysInfo::ByteOrder);
+        qint32 readInt32(qint64 pos, QSysInfo::Endian endian = QSysInfo::ByteOrder);
+        qint64 readInt64(qint64 pos, QSysInfo::Endian endian = QSysInfo::ByteOrder);
+
+    private slots:
+        void onDataChanged(qint64 offset, qint64, QHexEditData::ActionType);
+
+    private:
+        void bufferizeData(qint64 pos);
+        bool inBuffer(qint64 pos);
+        bool needsBuffering(qint64 pos);
+
+};
+
 
 class QHexEdit : QFrame
 {
