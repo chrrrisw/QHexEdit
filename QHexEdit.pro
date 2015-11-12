@@ -1,22 +1,9 @@
+include(../src.pri)
+
 TEMPLATE = lib
 TARGET = QHexEdit
-INCLUDEPATH += .
 
-QT += gui widgets
-
-unix {
-
-  CONFIG += shared_and_static build_all
-
-  target.path = /usr/local/lib
-  INSTALLS += target
-
-} else {
-
-  CONFIG += staticlib
-
-}
-
+CONFIG += staticlib
 CONFIG -= debug_and_release
 
 HEADERS += qhexedit.h \
