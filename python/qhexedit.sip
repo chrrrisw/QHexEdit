@@ -119,20 +119,20 @@ class QHexEdit : QFrame
         void paste();
         void pasteHex();
         void selectAll();
-        void setReadOnly(bool);
+        void setReadOnly(bool b);
         void setCursorPos(qint64 pos);
         void setData(QHexEditData *hexeditdata);
         void selectPos(qint64 pos);
         void setSelection(qint64 start, qint64 end);
         void setSelectionLength(qint64 start , qint64 length);
-        void highlightBackground(qint64, qint64, const QColor &);
-        void highlightForeground(qint64, qint64, const QColor &);
-        void clearHighlight(qint64, qint64);
+        void highlightBackground(qint64 start, qint64 end, const QColor& color);
+        void highlightForeground(qint64 start, qint64 end, const QColor& color);
+        void clearHighlight(qint64 start, qint64 end);
         void clearHighlight();
-        void commentRange(qint64, qint64, const QString &);
-        void uncommentRange(qint64, qint64);
+        void commentRange(qint64 start, qint64 end, const QString& comment);
+        void uncommentRange(qint64 start, qint64 end);
         void clearComments();
-        void setVerticalScrollBarValue(int);
-        void scroll(QWheelEvent *);
+        void setVerticalScrollBarValue(int value);
+        void scroll(QWheelEvent *event);
 
 };
